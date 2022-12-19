@@ -25,28 +25,7 @@ const pegination = movieList.slice(
   (currentPage - 1) * postPage  , (currentPage-1) * postPage + postPage
   );
   console.log(pegination)
-// useEffect(()=>{
-  
-//     // setmovieList([...pegination])
-// }, [])
 
-  // const options = {
-  //   method: 'GET',
-  //   url: 'https://imdb-top-100-movies.p.rapidapi.com/premiummovies',
-  //   headers: {
-  //     'X-RapidAPI-Key': 'f564200555msh13a2a6f11d4faf2p183371jsn34d384336953',
-  //     'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
-  //   }
-  // };
-  // const options = {
-  //   mathod : 'Get',
-  //   url : 'https://imdb-top-100-movies.p.rapidapi.com/',
-  //   header : {
-  //     'X-RapidAPI-Key': '4133b00787msh57ad8d80f00ca63p1dfc26jsn18ad4307e6fb',
-  //     'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
-  //   }
-  // };
- 
 
 
 const options = {
