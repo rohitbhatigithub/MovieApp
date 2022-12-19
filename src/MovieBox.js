@@ -6,7 +6,7 @@ function MovieBox({eachMovie}) {
     
     <div className='movie_box'>
    
-    <img  className='image' src={image} alt="image"/>
+    <img  className='image' src={image} alt="movie"/>
     
      <div className='circle'>
     <span className='circle_item'>{rating}</span>
