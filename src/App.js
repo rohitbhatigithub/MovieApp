@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from 'react';
 // const axios = require("axios");
@@ -12,12 +11,12 @@ function App() {
   const [movieList, setmovieList] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [currentPage , setCurrentPage] = useState(1);
-  const [ postPage , setPostPage] = useState(10);
+  const [ postPage] = useState(10);
   const [totalPage, setTotalPage] = useState(0);
   const [allItem , setAllItem] = useState([]);
   
-   const indexOfFirstPage = currentPage * postPage; 
-   const indexOFLastPage =   indexOfFirstPage -postPage;  
+  //  const indexOfFirstPage = currentPage * postPage; 
+  //  const indexOFLastPage =   indexOfFirstPage -postPage;  
 
 
 
@@ -44,6 +43,7 @@ const options = {
 // });
 
   // call to api...
+
   useEffect(() => {
     axios.request(options).then(function (response) {
       setmovieList(response.data);
@@ -52,6 +52,7 @@ const options = {
     }).catch(function (error) {
       console.error(error);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) 
 
 
@@ -90,8 +91,9 @@ const options = {
      
       <div className='movie-container'>
         {
+          // eslint-disable-next-line array-callback-return
           allItem.filter((item) => {
-            if (item.title == "") {
+            if (item.title === "") {
               return item;
             }
             else if (item.title.toLowerCase().includes(inputValue.toLowerCase())) {
