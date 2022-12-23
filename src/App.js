@@ -10,20 +10,26 @@ import Header from './Header';
 function App() {
   const [movieList, setmovieList] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [sortValue, setSortValue] = useState('All');
   const [currentPage , setCurrentPage] = useState(1);
   const [ postPage] = useState(10);
   const [totalPage, setTotalPage] = useState(0);
-  const [allItem , setAllItem] = useState([]);
+ 
+  const [pegination,setPegination] = useState([]);
+  const [abc, setAbc] = useState([]); 
   
-  //  const indexOfFirstPage = currentPage * postPage; 
-  //  const indexOFLastPage =   indexOfFirstPage -postPage;  
+ 
+useEffect(()=>{
+  let arr2 = [];
+console.log(abc)
+console.log(currentPage)
+  arr2 =abc.slice(
+        (currentPage - 1) * postPage  , (currentPage-1) * postPage + postPage
+        )
+console.log(arr2,"2")
+  setPegination([...arr2])
 
-
-
-const pegination = movieList.slice(
-  (currentPage - 1) * postPage  , (currentPage-1) * postPage + postPage
-  );
-  console.log(pegination)
+},[currentPage,abc])
 
 
 
@@ -36,18 +42,44 @@ const options = {
   }
 };
 
-// axios.request(options).then(function (response) {
-// 	console.log(response.data);
-// }).catch(function (error) {
-// 	console.error(error);
-// });
-
   // call to api...
+
+
+useEffect(()=>{
+  let arr  = [];
+if(inputValue !==""){
+   arr =movieList && movieList.filter(e=>e.title.toLowerCase().includes(inputValue.toLowerCase())) 
+  }
+   else{
+    arr=[...movieList]
+  }
+console.log(arr,"arr")
+if(sortValue==="All"){
+  arr=[...arr]
+}
+else if(sortValue==="Year"){
+  arr = arr.sort((a,b)=>a.year >b.year?1:-1)
+}
+else if(sortValue==="Name"){
+  arr = arr.sort((a,b)=>a.title> b.title ?1:-1)
+}
+else if( sortValue=== "Rating"){
+  arr= arr.sort((a,b)=>a.rating>b.rating ?1:-1)
+}
+setAbc([...arr])
+setCurrentPage(1);
+// setAbc([...pegination])
+setTotalPage(arr.length)
+},[inputValue, sortValue])
+
+
 
   useEffect(() => {
     axios.request(options).then(function (response) {
       setmovieList(response.data);
-      setAllItem(response.data);
+      setAbc(response.data);
+    
+     //setPegination(response.data)
       setTotalPage(response.data.length)
     }).catch(function (error) {
       console.error(error);
@@ -59,30 +91,9 @@ const options = {
   // conditional sort...
  ////added a comment to check Git
   function sortFunction(value){
-   
- if( value === "Year"){
-       
-        let arr= pegination.sort((a,b)=> a.year >b.year?1:-1)
-    
-       setAllItem([...arr])
- }
- else if(value === "Rating"){
-   
-  let arr= pegination.sort((a,b)=> a.rating > b.rating ? 1 : -1)
-   
-    setAllItem([...arr])
- }
- else if(value === "Name"){
-  
-  let arr= pegination.sort((a,b)=> a.title > b.title ? 1 : -1)
-  
-   setAllItem([...arr])
- }
- else{
-  setAllItem([...movieList])
- }
+ setSortValue(value)
   }
-
+console.log(totalPage)
   return (
     <div className="App">
    
@@ -92,18 +103,8 @@ const options = {
       <div className='movie-container'>
         {
           // eslint-disable-next-line array-callback-return
-          allItem.filter((item) => {
-            if (item.title === "") {
-              return item;
-            }
-            else if (item.title.toLowerCase().includes(inputValue.toLowerCase())) {
-              return item;
-            }
-
-          })
-          .map((item) => {
+          pegination.map((item) => {
             return (
-              
               <MovieBox eachMovie={item} />
             )
           })
