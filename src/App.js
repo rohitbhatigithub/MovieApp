@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './App.css';
 import React, { useEffect, useState } from 'react';
 // const axios = require("axios");
